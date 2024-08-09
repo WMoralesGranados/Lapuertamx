@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrl: './closets.component.css'
 })
 export class ClosetsComponent {
+  entrepanerias = [''];
 
+  addEntrepeneria(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    if (selectElement.value) {
+      this.entrepanerias.push('');
+    }
+  }
 }

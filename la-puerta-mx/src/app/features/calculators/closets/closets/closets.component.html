@@ -1,75 +1,142 @@
+<div class="min-h-screen bg-gray-100 flex items-center justify-center p-8">
+  <div class="max-w-5xl w-full bg-white shadow-lg rounded-lg p-8 relative">
+    <!-- Encabezado -->
+    <div class="flex justify-between items-center mb-6">
+      <div class="w-3/4 mr-4">
+        <label class="font-bold text-gray-700">Cliente</label>
+        <input type="text" placeholder="Nombre del cliente" class="border-b border-gray-400 w-full bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700">
+      </div>
+      <div class="w-1/4">
+        <label class="font-bold text-gray-700">No. Pedido</label>
+        <input type="text" placeholder="Número de pedido" class="border-b border-gray-400 w-full bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700">
+      </div>
+    </div>
 
-<div class="closet-container">
-  <!-- Encabezado -->
-  <div class="header">
-    <div class="header-item">
-      <label>Cliente</label>
-      <input type="text" placeholder="Nombre del cliente">
+    <h1 class="text-center text-3xl font-bold text-gray-800 mb-6">FLORENCIA CLASSIC</h1>
+
+    <div class="flex justify-center items-center mb-6 relative">
+      <div class="absolute top-0 right-[125px]">
+        <input type="text" placeholder="Profundidad" class="w-32 border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700">
+      </div>
+
+      <!-- Input para "Alto" -->
+      <div class="absolute left-[calc(50%-350px)]">
+        <input type="text" placeholder="Alto" class="w-32 border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700">
+      </div>
+
+      <img src="/florenciaClassic.png" alt="Imagen del closet" class="max-w-xl max-h-[600px] mx-auto shadow-sm rounded z-10">
+
+      <!-- Input para "Ancho" centrado debajo de la imagen -->
+      <div class="absolute left-1/2 transform -translate-x-1/2 top-full mt-4">
+        <input type="text" placeholder="Ancho" class="w-32 border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700">
+      </div>
+
+    <!-- Contador pequeño con botones "+" y "-" a la derecha del input "Ancho" -->
+    <div class="absolute left-[calc(50%+10.5rem)] top-full mt-4 flex items-center">
+      <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none">-</button>
+      <input type="text" value="1" class="w-10 text-center border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700 text-sm">
+      <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none">+</button>
     </div>
-    <div class="header-item">
-      <label>No. Pedido</label>
-      <input type="text" placeholder="Número de pedido">
+
+      <!-- Contador pequeño con botones "+" y "-" -->
+      <div class="absolute left-1/2 transform -translate-x-[calc(50%+13rem)] top-full mt-4 flex items-center">
+        <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none">-</button>
+        <input type="text" value="1" class="w-10 text-center border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700 text-sm">
+        <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none">+</button>
+      </div>
+
+      <div class="absolute right-[calc(50%-310px)]">
+        <input type="checkbox" id="costado" class="form-checkbox h-4 w-4 text-gray-500 bg-white border-gray-400 focus:ring-gray-500 checked:bg-gray-500 checked:border-gray-500">
+        <label for="costado" class="ml-2 font-bold text-gray-700">Costado</label>
+      </div>
     </div>
+
+    <div class="flex justify-between mb-6 mt-16 space-x-4">
+      <div class="flex flex-col w-full max-w-xs">
+        <select class="border border-gray-300 rounded p-1 mt-2 focus:outline-none focus:ring focus:ring-gray-200 w-full"> <!-- Reducido el padding -->
+          <option value="" disabled selected>Color Exterior</option>
+          <option value="color1">Color 1</option>
+          <option value="color2">Color 2</option>
+        </select>
+      </div>
+      <div class="flex flex-col w-full max-w-xs">
+        <select class="border border-gray-300 rounded p-1 mt-2 focus:outline-none focus:ring focus:ring-gray-200 w-full"> <!-- Reducido el padding -->
+          <option value="" disabled selected>Color Interior</option>
+          <option value="color1">Color 1</option>
+          <option value="color2">Color 2</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Tabla -->
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-200">
+          <tr>
+            <th scope="col" class="px-32 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider"></th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider">CANTIDAD</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider">ANCHO</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider">ALTO</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider">COLOR</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap font-bold text-gray-900">PUERTAS Y CONTRAVENTANAS</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">4</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">400</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">1835</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">C.E.</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900"></td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">4</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">500</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">600</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">C.E.</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900"></td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">2</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">295</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">740</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">C.E.</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap font-bold text-gray-900">FRENTES DE CAJON</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">6</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">200</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">595</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">C.E.</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">COSTADO</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">1</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">620</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">2400</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">C.E.</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">ENTREPAÑERIA INTERNA</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">1</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">600</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">2400</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">C.I.</td>
+          </tr>
+          <tr *ngFor="let option of entrepanerias; let i = index">
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">ENTREPAÑERÍA INTERNA {{i + 1}}</td>
+            <td colspan="4" class="px-6 py-4 whitespace-nowrap">
+              <select class="border border-gray-300 rounded p-1 focus:outline-none focus:ring focus:ring-gray-200 w-full" (change)="addEntrepeneria($event)">
+                <option value="" disabled selected>Selecciona entrepañería interna</option>
+                <option value="entrep1">Entrepañería Interna 1</option>
+                <option value="entrep2">Entrepañería Interna 2</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
   </div>
-
-  <h1 class="title">FLORENCIA CLASSIC</h1>
-
-  <!-- Imagen central con controles -->
-  <div class="closet-image-container">
-    <div class="dimension-control">
-      <label>Alto</label>
-      <input type="text" value="1835"> <!-- Asumiendo que esto sea un input -->
-    </div>
-
-    <img src="path_to_image/closet-image.jpg" alt="Imagen del closet" class="closet-image">
-
-    <div class="dimension-control">
-      <label>Ancho</label>
-      <input type="text" value="400"> <!-- Asumiendo que esto sea un input -->
-    </div>
-  </div>
-
-  <div class="color-selection">
-    <div>
-      <label>Color Exterior</label>
-      <select>
-        <option value="color1">Color 1</option>
-        <option value="color2">Color 2</option>
-      </select>
-    </div>
-    <div>
-      <label>Color Interior</label>
-      <select>
-        <option value="color1">Color 1</option>
-        <option value="color2">Color 2</option>
-      </select>
-    </div>
-  </div>
-
-  <!-- Tabla -->
-  <table class="details-table">
-    <thead>
-      <tr>
-        <th>Cantidad</th>
-        <th>Ancho</th>
-        <th>Alto</th>
-        <th>Color</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>4</td>
-        <td>400</td>
-        <td>1835</td>
-        <td>C.E.</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>500</td>
-        <td>600</td>
-        <td>C.E.</td>
-      </tr>
-      <!-- Más filas según sea necesario -->
-    </tbody>
-  </table>
 </div>
