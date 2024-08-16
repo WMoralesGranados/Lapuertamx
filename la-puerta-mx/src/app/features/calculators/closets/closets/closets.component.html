@@ -1,5 +1,21 @@
 <div class="min-h-screen bg-gray-100 flex items-center justify-center p-8">
-  <div class="max-w-5xl w-full bg-white shadow-lg rounded-lg p-8 relative">
+  <div id="pdf-content" class="max-w-5xl w-full bg-white shadow-lg rounded-lg p-8 relative">
+    <!-- Botones para descargar PDF y CSV -->
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <button class=" no-print bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded shadow-md mr-2" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" (click)="descargarPDF()">Descargar PDF</button>
+        <button class=" no-print bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded shadow-md" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Descargar CSV</button>
+      </div>
+    </div>
+    <!-- Icono de impresión -->
+    <div class="absolute top-0 right-0 mt-4 mr-4 flex items-center space-x-2">
+      <button class=" no-print bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold p-2 rounded-full shadow-md flex items-center justify-center" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9V2h12v7M6 18H3v3h18v-3h-3M6 9h12M9 14h6"/>
+        </svg>
+      </button>
+      <span class=" no-print font-bold text-gray-700">Imprimir</span>
+    </div>
     <!-- Encabezado -->
     <div class="flex justify-between items-center mb-6">
       <div class="w-3/4 mr-4">
@@ -16,54 +32,52 @@
 
     <div class="flex justify-center items-center mb-6 relative">
       <div class="absolute top-0 right-[125px]">
-        <input type="text" placeholder="Profundidad" class="w-32 border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700">
+        <input type="text" placeholder="Profundidad" class="w-32 border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700" [(ngModel)]="profundidad" (input)="calcularAnchoPuerta()">
       </div>
 
       <!-- Input para "Alto" -->
       <div class="absolute left-[calc(50%-350px)]">
-        <input type="text" placeholder="Alto" class="w-32 border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700">
+        <input type="text" placeholder="Alto" class="w-32 border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700" [(ngModel)]="alto" (input)="onAltoChange()">
       </div>
 
       <img src="/florenciaClassic.png" alt="Imagen del closet" class="max-w-xl max-h-[600px] mx-auto shadow-sm rounded z-10">
 
       <!-- Input para "Ancho" centrado debajo de la imagen -->
       <div class="absolute left-1/2 transform -translate-x-1/2 top-full mt-4">
-        <input type="text" placeholder="Ancho" class="w-32 border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700">
+        <input type="text" placeholder="Ancho" class="w-32 border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700"[(ngModel)]="ancho" [value]="ancho !== null ? ancho : ''" (input)="calcularAnchoPuerta()">
       </div>
 
     <!-- Contador pequeño con botones "+" y "-" a la derecha del input "Ancho" -->
     <div class="absolute left-[calc(50%+10.5rem)] top-full mt-4 flex items-center">
-      <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none">-</button>
-      <input type="text" value="1" class="w-10 text-center border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700 text-sm">
-      <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none">+</button>
+      <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none" (click)="ajustarPosteIzq(-5)">-</button>
+      <input type="text" [value]="posteIzq" class="w-10 text-center border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700 text-sm" readonly>
+      <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none" (click)="ajustarPosteIzq(5)">+</button>
     </div>
 
       <!-- Contador pequeño con botones "+" y "-" -->
       <div class="absolute left-1/2 transform -translate-x-[calc(50%+13rem)] top-full mt-4 flex items-center">
-        <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none">-</button>
-        <input type="text" value="1" class="w-10 text-center border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700 text-sm">
-        <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none">+</button>
+        <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none" (click)="ajustarPosteDerecho(-5)">-</button>
+        <input type="text" [value]="posteDerecho" class="w-10 text-center border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700 text-sm" readonly>
+        <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none" (click)="ajustarPosteDerecho(5)">+</button>
       </div>
 
       <div class="absolute right-[calc(50%-310px)]">
-        <input type="checkbox" id="costado" class="form-checkbox h-4 w-4 text-gray-500 bg-white border-gray-400 focus:ring-gray-500 checked:bg-gray-500 checked:border-gray-500">
+        <input type="checkbox" id="costado" class="form-checkbox h-4 w-4 text-gray-500 bg-white border-gray-400 focus:ring-gray-500 checked:bg-gray-500 checked:border-gray-500" (change)="onCostadoChange($event)">
         <label for="costado" class="ml-2 font-bold text-gray-700">Costado</label>
       </div>
     </div>
 
     <div class="flex justify-between mb-6 mt-16 space-x-4">
       <div class="flex flex-col w-full max-w-xs">
-        <select class="border border-gray-300 rounded p-1 mt-2 focus:outline-none focus:ring focus:ring-gray-200 w-full"> <!-- Reducido el padding -->
+        <select class="border border-gray-300 rounded p-1 mt-2 focus:outline-none focus:ring focus:ring-gray-200 w-full">
           <option value="" disabled selected>Color Exterior</option>
-          <option value="color1">Color 1</option>
-          <option value="color2">Color 2</option>
+          <option *ngFor="let color of colores" [value]="color.codigo">{{ color.nombre }}</option>
         </select>
       </div>
       <div class="flex flex-col w-full max-w-xs">
-        <select class="border border-gray-300 rounded p-1 mt-2 focus:outline-none focus:ring focus:ring-gray-200 w-full"> <!-- Reducido el padding -->
+        <select class="border border-gray-300 rounded p-1 mt-2 focus:outline-none focus:ring focus:ring-gray-200 w-full">
           <option value="" disabled selected>Color Interior</option>
-          <option value="color1">Color 1</option>
-          <option value="color2">Color 2</option>
+          <option *ngFor="let color of colores" [value]="color.codigo">{{ color.nombre }}</option>
         </select>
       </div>
     </div>
@@ -83,60 +97,119 @@
         <tbody class="bg-white divide-y divide-gray-200">
           <tr>
             <td class="px-6 py-4 whitespace-nowrap font-bold text-gray-900">PUERTAS Y CONTRAVENTANAS</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">4</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">400</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">1835</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">C.E.</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarCantidad" type="text" [value]="4" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="anchoPuerta !== null" type="text" [value]="anchoPuerta" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarAlto" type="text" [value]="1835" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarCantidad" type="text" [value]="'C.E.'" class="border-none bg-transparent w-full">
+            </td>
           </tr>
           <tr>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900"></td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">4</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">500</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">600</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">C.E.</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarContraventanas" type="text" [value]="4" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="anchoContraventanas !== null" type="text" [value]="anchoContraventanas" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarContraventanas" type="text" [value]="1835" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarContraventanas" type="text" [value]="'C.E.'" class="border-none bg-transparent w-full">
+            </td>
           </tr>
           <tr>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900"></td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">2</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">295</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">740</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">C.E.</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarSecreter" type="text" [value]="2" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarSecreter" type="text" [value]="295" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarSecreter" type="text" [value]="740" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarSecreter" type="text" [value]="'C.E.'" class="border-none bg-transparent w-full">
+            </td>
           </tr>
           <tr>
             <td class="px-6 py-4 whitespace-nowrap font-bold text-gray-900">FRENTES DE CAJON</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">6</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">200</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">595</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">C.E.</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarFrentesCajon" type="text" [value]="6" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarFrentesCajon" type="text" [value]="200" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarFrentesCajon" type="text" [value]="595" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarFrentesCajon" type="text" [value]="'C.E.'" class="border-none bg-transparent w-full">
+            </td>
           </tr>
           <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">COSTADO</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">1</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">620</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">2400</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">C.E.</td>
+            <td class="px-6 py-4 whitespace-nowrap font-bold text-gray-900">COSTADO</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarCostado" type="text" [value]="1" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarCostado" type="text" [value]="620" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarCostado" type="text" [value]="2400" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarCostado" type="text" [value]="'C.E.'" class="border-none bg-transparent w-full">
+            </td>
           </tr>
           <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">ENTREPAÑERIA INTERNA</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">1</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">600</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">2400</td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">C.I.</td>
+            <td class="px-6 py-4 whitespace-nowrap font-bold text-gray-900">MALETERO</td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarMaletero" type="text" [value]="1" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarMaletero" type="text" [value]="maleteroAncho" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarMaletero" type="text" [value]="maleteroAlto" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input *ngIf="mostrarMaletero" type="text" [value]="'C.I.'" class="border-none bg-transparent w-full">
+            </td>
           </tr>
-          <tr *ngFor="let option of entrepanerias; let i = index">
+          <tr *ngFor="let entrepaneria of entrepanerias; let i = index">
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">ENTREPAÑERÍA INTERNA {{i + 1}}</td>
-            <td colspan="4" class="px-6 py-4 whitespace-nowrap">
-              <select class="border border-gray-300 rounded p-1 focus:outline-none focus:ring focus:ring-gray-200 w-full" (change)="addEntrepeneria($event)">
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input type="text" [(ngModel)]="entrepaneria.cantidad" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input type="text" [(ngModel)]="entrepaneria.ancho" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input type="text" [(ngModel)]="entrepaneria.alto" class="border-none bg-transparent w-full">
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
+              <input type="text" [(ngModel)]="entrepaneria.color" class="border-none bg-transparent w-full">
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" class="px-6 py-4 whitespace-nowrap">
+              <select class="no-print border border-gray-300 rounded p-1 focus:outline-none focus:ring focus:ring-gray-200 w-full" (change)="addEntrepeneria($event)">
                 <option value="" disabled selected>Selecciona entrepañería interna</option>
-                <option value="entrep1">Entrepañería Interna 1</option>
-                <option value="entrep2">Entrepañería Interna 2</option>
+                <option *ngFor="let entrepano of entrepanos" [value]="entrepano">{{ entrepano }}</option>
               </select>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-
-
   </div>
 </div>
