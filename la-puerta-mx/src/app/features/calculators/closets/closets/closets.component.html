@@ -49,16 +49,16 @@
 
     <!-- Contador pequeño con botones "+" y "-" a la derecha del input "Ancho" -->
     <div class="absolute left-[calc(50%+10.5rem)] top-full mt-4 flex items-center">
-      <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none" (click)="ajustarPosteIzq(-5)">-</button>
+      <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none" (click)="ajustarPoste('izq', -5)">-</button>
       <input type="text" [value]="posteIzq" class="w-10 text-center border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700 text-sm" readonly>
-      <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none" (click)="ajustarPosteIzq(5)">+</button>
+      <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none" (click)="ajustarPoste('izq', 5)">+</button>
     </div>
 
       <!-- Contador pequeño con botones "+" y "-" -->
       <div class="absolute left-1/2 transform -translate-x-[calc(50%+13rem)] top-full mt-4 flex items-center">
-        <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none" (click)="ajustarPosteDerecho(-5)">-</button>
+        <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none" (click)="ajustarPoste('der', -5)">-</button>
         <input type="text" [value]="posteDerecho" class="w-10 text-center border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700 text-sm" readonly>
-        <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none" (click)="ajustarPosteDerecho(5)">+</button>
+        <button class="text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold py-1 px-2 focus:outline-none" (click)="ajustarPoste('der', 5)">+</button>
       </div>
 
       <div class="absolute right-[calc(50%-310px)]">
