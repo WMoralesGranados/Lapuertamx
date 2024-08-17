@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -100,6 +100,8 @@ export class ClosetsComponent {
   maleteroAncho: number | null = null;
   maleteroAlto: number | null = null;
 
+  constructor(private cdr: ChangeDetectorRef) {}
+
   descargarPDF() {
     const element = document.getElementById('pdf-content'); // Ajusta esto si es necesario
     if (element) {
@@ -129,15 +131,34 @@ export class ClosetsComponent {
     }
   }
 
-
-  // Función para aumentar o disminuir el valor del poste izquierdo
-  ajustarPosteIzq(valor: number) {
-    this.posteIzq = Math.max(0, this.posteIzq + valor); // Evita que el valor baje de 0
+  // Función genérica para ajustar el valor de un poste
+  ajustarPoste(tipo: 'izq' | 'der', valor: number) {
+    if (tipo === 'izq') {
+      const nuevoValorIzq = this.posteIzq - valor;
+      if (nuevoValorIzq >= 0) {
+        this.posteIzq = nuevoValorIzq;
+      }
+    } else if (tipo === 'der') {
+      const nuevoValorDer = this.posteDerecho + valor;
+      if (nuevoValorDer >= 0) {
+        this.posteDerecho = nuevoValorDer;
+      }
+    }
+    this.calcularAnchoPuertaSolo(); // Recalcula solo el ancho de las puertas
   }
 
-  // Función para aumentar o disminuir el valor del poste derecho
-  ajustarPosteDerecho(valor: number) {
-    this.posteDerecho = Math.max(0, this.posteDerecho + valor); // Evita que el valor baje de 0
+  calcularAnchoPuertaSolo() {
+    if (this.ancho !== null && this.ancho > 0 && this.posteIzq >= 0 && this.posteDerecho >= 0) {
+      const resultadoAnchoPuerta = (this.ancho - 600 - this.posteIzq - 30 - this.posteDerecho) / 4 + 10;
+
+      if (resultadoAnchoPuerta > 0) {
+        this.anchoPuerta = resultadoAnchoPuerta;
+      } else {
+        this.resetVisibilidad();
+      }
+    } else {
+      this.resetVisibilidad();
+    }
   }
 
   // Método para calcular el ancho de las puertas
@@ -149,9 +170,9 @@ export class ClosetsComponent {
         this.anchoPuerta = resultadoAnchoPuerta;
         this.mostrarCantidad = true;
         this.mostrarAlto = true;
-        this.calcularAnchoContraventanas();
         this.mostrarSecreter = true;
         this.calcularMaletero();
+        this.calcularAnchoContraventanas(); // Llamada para calcular contraventanas
       } else {
         this.resetVisibilidad();
       }
