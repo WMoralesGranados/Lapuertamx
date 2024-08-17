@@ -1,6 +1,29 @@
-<div class="home-container">
+<!-- <div class="home-container">
   <h1>Bienvenido a la Carpintería</h1>
   <button routerLink="/closets">Ir a la Calculadora de Closets</button>
 </div>
+ -->
+
+ <div class="min-h-screen bg-gray-100 flex items-center justify-center" style="background-image: url('/logo.png'); background-size: cover; background-position: center;">
+  <div class="bg-white bg-opacity-80 shadow-lg rounded-lg p-8 max-w-md w-full text-center">
+    <h1 class="text-3xl font-semibold text-gray-800 mb-6">Bienvenido a la Carpintería</h1>
+    <div class="space-y-6">
+      <button (click)="openModal()" class="w-full py-4 bg-gray-600 hover:bg-gray-700 text-white text-lg font-medium rounded-lg shadow-md transform transition-transform hover:scale-105">
+        Closets
+      </button>
+      <button routerLink="/cocinas" class="w-full py-4 bg-gray-600 hover:bg-gray-700 text-white text-lg font-medium rounded-lg shadow-md transform transition-transform hover:scale-105">
+        Cocinas
+      </button>
+      <button routerLink="/vestidores" class="w-full py-4 bg-gray-600 hover:bg-gray-700 text-white text-lg font-medium rounded-lg shadow-md transform transition-transform hover:scale-105">
+        Vestidores
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <app-closet-modal *ngIf="isModalOpen" (close)="closeModal()"></app-closet-modal>
+</div>
+
+
 
 
