@@ -84,12 +84,15 @@ export class ClosetsComponent {
   ];
 
   ancho: number | null = null;
-  alto: number | null = null;
+  alto: number = 1835;
   profundidad: number | null = null;
   posteIzq: number = 50;
   posteDerecho: number = 50;
   anchoPuerta: number | null = null;
   anchoContraventanas: number | null = null;
+  cantidadPuertas: number = 4;
+  cantidadContrav: number = 4;
+  secreter: number = 2;
   mostrarCantidad: boolean = false;
   mostrarAlto: boolean = false;
   mostrarContraventanas: boolean = false;
@@ -99,6 +102,10 @@ export class ClosetsComponent {
   mostrarMaletero: boolean = false;
   maleteroAncho: number | null = null;
   maleteroAlto: number | null = null;
+  selectedColorExterior: number | null = null;
+  selectedColorInterior: number | null = null;
+  selectedExteriorName: string | null = null;
+  selectedInteriorName: string | null = null;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -129,6 +136,114 @@ export class ClosetsComponent {
         });
       });
     }
+  }
+
+  descargarCSV() {
+    // Encabezados del CSV
+    const headers = ['Codigo', 'Cantidad', 'Largo', 'Ancho', 'Material', 'Descripcion', 'Observacion'];
+
+    // Crear un array para almacenar las filas de datos
+    const rows = [];
+
+    // 1. Agregar la información de Puertas y Contraventanas
+    if (this.anchoPuerta !== null) {
+      rows.push({
+        codigo: '',
+        cantidad: this.cantidadPuertas.toString() || '',
+        largo: this.alto.toString() || '',
+        ancho: this.anchoPuerta?.toString() || '',
+        material: this.selectedColorExterior?.toString() || 'N/A',
+        descripcion: 'Puertas @L1 @B1 @T1 @R1',
+        observacion: ''
+      });
+      rows.push({
+        codigo: '',
+        cantidad: this.cantidadPuertas.toString() || '',
+        largo: this.cantidadContrav.toString() || '',
+        ancho: this.anchoContraventanas?.toString() || '',
+        material: this.selectedColorExterior?.toString() || 'N/A',
+        descripcion: 'Contraventanas @L1 @B1 @T1 @R1',
+        observacion: ''
+      });
+    }
+
+    // 2. Información del Secreter
+    if (this.mostrarSecreter) {
+      rows.push({
+        codigo: '',
+        cantidad: '2',
+        largo: '740', // valor fijo
+        ancho: '295', // valor fijo
+        material: this.selectedColorExterior?.toString() || 'N/A', // Usar directamente el código del color exterior
+        descripcion: 'Secreter @L1 @B1 @T1 @R1',
+        observacion: ''
+      });
+    }
+
+    // 3. Información del Costado
+    if (this.mostrarCostado) {
+      rows.push({
+        codigo: '004',
+        cantidad: '1',
+        largo: '2400', // valor fijo
+        ancho: '620', // valor fijo
+        material: this.selectedColorExterior?.toString() || 'N/A', // Usar directamente el código del color exterior
+        descripcion: 'Costado',
+        observacion: ''
+      });
+    }
+
+    // 4. Información del Maletero
+    if (this.mostrarMaletero) {
+      rows.push({
+        codigo: '005',
+        cantidad: '1',
+        largo: this.maleteroAlto?.toString() || '',
+        ancho: this.maleteroAncho?.toString() || '',
+        material: this.selectedColorInterior?.toString() || 'N/A', // Usar directamente el código del color interior
+        descripcion: 'Maletero',
+        observacion: ''
+      });
+    }
+
+    // 5. Información de los Frentes de Cajón
+    if (this.mostrarFrentesCajon) {
+      rows.push({
+        codigo: '006',
+        cantidad: '6',
+        largo: '595', // valor fijo
+        ancho: '200', // valor fijo
+        material: this.selectedColorExterior?.toString() || 'N/A', // Usar directamente el código del color exterior
+        descripcion: 'Frente de Cajón',
+        observacion: ''
+      });
+    }
+
+    // 6. Información de las Entrepañerías internas
+    this.entrepanerias.forEach((entrepaneria, index) => {
+      rows.push({
+        codigo: `00${7 + index}`,
+        cantidad: entrepaneria.cantidad.toString(),
+        largo: entrepaneria.alto.toString(),
+        ancho: entrepaneria.ancho.toString(),
+        material: this.selectedColorInterior?.toString() || 'N/A', // Usar directamente el código del color interior
+        descripcion: `Entrepaño @B${index + 1}`,
+        observacion: ''
+      });
+    });
+
+    // Convertir datos a formato CSV
+    const csvContent = [headers.join(','), ...rows.map(row => Object.values(row).join(','))].join('\n');
+
+    // Crear y descargar el archivo CSV
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'closet.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   // Función genérica para ajustar el valor de un poste
@@ -215,6 +330,12 @@ export class ClosetsComponent {
   onCostadoChange(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     this.mostrarCostado = inputElement.checked;
+  }
+
+  // Método para actualizar el nombre del color seleccionado
+  onColorExteriorChange() {
+    const colorSeleccionado = this.colores.find(color => color.codigo === this.selectedColorExterior);
+    this.selectedExteriorName = colorSeleccionado ? colorSeleccionado.nombre : null;
   }
 
   resetVisibilidad() {
