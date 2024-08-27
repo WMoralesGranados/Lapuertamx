@@ -101,10 +101,10 @@
               <input *ngIf="mostrarCantidad" type="text" [(ngModel)]="cantidadPuertas" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="anchoPuerta !== null" type="text" [value]="anchoPuerta" class="border-none bg-transparent w-full">
+              <input *ngIf="anchoPuerta !== null" type="text" [(ngModel)]="anchoPuerta" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarAlto" type="text" [(ngModel)]="alto" class="border-none bg-transparent w-full">
+              <input *ngIf="mostrarAlto" type="text" [(ngModel)]="altoPuertas" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
               <input *ngIf="mostrarCantidad" type="text" [(ngModel)]="selectedExteriorName" class="border-none bg-transparent w-full">
@@ -116,10 +116,10 @@
               <input *ngIf="mostrarContraventanas" type="text" [(ngModel)]="cantidadContrav" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="anchoContraventanas !== null" type="text" [value]="anchoContraventanas" class="border-none bg-transparent w-full">
+              <input *ngIf="anchoContraventanas !== null" type="text" [(ngModel)]="anchoContraventanas" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarContraventanas" type="text" [value]="600" class="border-none bg-transparent w-full">
+              <input *ngIf="mostrarContraventanas" type="text" [(ngModel)]="altoContrav" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
               <input *ngIf="mostrarContraventanas" type="text" [value]="'C.E.'" class="border-none bg-transparent w-full">
@@ -128,13 +128,13 @@
           <tr>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900"></td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarSecreter" type="text" [value]="2" class="border-none bg-transparent w-full">
+              <input *ngIf="mostrarSecreter" type="text" [(ngModel)]="secreter" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarSecreter" type="text" [value]="295" class="border-none bg-transparent w-full">
+              <input *ngIf="mostrarSecreter" type="text" [(ngModel)]="anchoSecreter" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarSecreter" type="text" [value]="740" class="border-none bg-transparent w-full">
+              <input *ngIf="mostrarSecreter" type="text" [(ngModel)]="altoSecreter" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
               <input *ngIf="mostrarSecreter" type="text" [value]="'C.E.'" class="border-none bg-transparent w-full">
@@ -143,13 +143,13 @@
           <tr>
             <td class="px-6 py-4 whitespace-nowrap font-bold text-gray-900">FRENTES DE CAJON</td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarFrentesCajon" type="text" [value]="6" class="border-none bg-transparent w-full">
+              <input *ngIf="mostrarFrentesCajon" type="text" [(ngModel)]="cantidadFrentes" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarFrentesCajon" type="text" [value]="200" class="border-none bg-transparent w-full">
+              <input *ngIf="mostrarFrentesCajon" type="text" [(ngModel)]="anchoFrentes" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarFrentesCajon" type="text" [value]="595" class="border-none bg-transparent w-full">
+              <input *ngIf="mostrarFrentesCajon" type="text" [(ngModel)]="altoFrentes" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
               <input *ngIf="mostrarFrentesCajon" type="text" [value]="'C.E.'" class="border-none bg-transparent w-full">
@@ -158,13 +158,13 @@
           <tr>
             <td class="px-6 py-4 whitespace-nowrap font-bold text-gray-900">COSTADO</td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarCostado" type="text" [value]="1" class="border-none bg-transparent w-full">
+              <input *ngIf="mostrarCostado" type="text" [(ngModel)]="cantidadCostado" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarCostado" type="text" [value]="620" class="border-none bg-transparent w-full">
+              <input *ngIf="mostrarCostado" type="text" [(ngModel)]="anchoCostado" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarCostado" type="text" [value]="2400" class="border-none bg-transparent w-full">
+              <input *ngIf="mostrarCostado" type="text" [(ngModel)]="altoCostado" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
               <input *ngIf="mostrarCostado" type="text" [value]="'C.E.'" class="border-none bg-transparent w-full">
@@ -173,13 +173,13 @@
           <tr>
             <td class="px-6 py-4 whitespace-nowrap font-bold text-gray-900">MALETERO</td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarMaletero" type="text" [value]="1" class="border-none bg-transparent w-full">
+              <input *ngIf="mostrarMaletero" type="text" [(ngModel)]="cantidadMaletero" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarMaletero" type="text" [value]="maleteroAncho" class="border-none bg-transparent w-full">
+              <input *ngIf="mostrarMaletero" type="text" [(ngModel)]="maleteroAncho" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarMaletero" type="text" [value]="maleteroAlto" class="border-none bg-transparent w-full">
+              <input *ngIf="mostrarMaletero" type="text" [(ngModel)]="maleteroAlto" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
               <input *ngIf="mostrarMaletero" type="text" [value]="'C.I.'" class="border-none bg-transparent w-full">
