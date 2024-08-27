@@ -121,7 +121,7 @@ export class ClosetsComponent {
   constructor(private cdr: ChangeDetectorRef) {}
 
   descargarPDF() {
-    const element = document.getElementById('pdf-content'); // Ajusta esto si es necesario
+    const element = document.getElementById('pdf-content');
     if (element) {
       // Ocultar los botones antes de generar el PDF
       document.querySelectorAll('.no-print').forEach((el) => {
@@ -154,23 +154,23 @@ export class ClosetsComponent {
     const headers = ['Codigo', 'Cantidad', 'Largo', 'Ancho', 'Material', 'Descripcion', 'Observacion'];
 
     // Crear un array para almacenar las filas de datos
-    const rows = [];
+    const rows1 = [];
 
     // 1. Agregar la información de Puertas y Contraventanas
     if (this.anchoPuerta !== null) {
-      rows.push({
+      rows1.push({
         codigo: '',
         cantidad: this.cantidadPuertas.toString() || '',
-        largo: this.alto.toString() || '',
+        largo: this.altoPuertas.toString() || '',
         ancho: this.anchoPuerta?.toString() || '',
         material: this.selectedColorExterior?.toString() || 'N/A',
         descripcion: 'Puertas @L1 @B1 @T1 @R1',
         observacion: ''
       });
-      rows.push({
+      rows1.push({
         codigo: '',
-        cantidad: this.cantidadPuertas.toString() || '',
-        largo: this.cantidadContrav.toString() || '',
+        cantidad: this.cantidadContrav.toString() || '',
+        largo: this.altoContrav.toString() || '',
         ancho: this.anchoContraventanas?.toString() || '',
         material: this.selectedColorExterior?.toString() || 'N/A',
         descripcion: 'Contraventanas @L1 @B1 @T1 @R1',
@@ -180,12 +180,12 @@ export class ClosetsComponent {
 
     // 2. Información del Secreter
     if (this.mostrarSecreter) {
-      rows.push({
+      rows1.push({
         codigo: '',
-        cantidad: '2',
-        largo: '740', // valor fijo
-        ancho: '295', // valor fijo
-        material: this.selectedColorExterior?.toString() || 'N/A', // Usar directamente el código del color exterior
+        cantidad: this.secreter.toString() || '',
+        largo: this.altoSecreter.toString() || '',
+        ancho: this.anchoSecreter.toString() || '',
+        material: this.selectedColorExterior?.toString() || 'N/A',
         descripcion: 'Secreter @L1 @B1 @T1 @R1',
         observacion: ''
       });
@@ -193,58 +193,66 @@ export class ClosetsComponent {
 
     // 3. Información del Costado
     if (this.mostrarCostado) {
-      rows.push({
-        codigo: '004',
-        cantidad: '1',
-        largo: '2400', // valor fijo
-        ancho: '620', // valor fijo
-        material: this.selectedColorExterior?.toString() || 'N/A', // Usar directamente el código del color exterior
-        descripcion: 'Costado',
+      rows1.push({
+        codigo: '',
+        cantidad: this.cantidadCostado.toString() || '',
+        largo: this.altoCostado.toString() || '',
+        ancho: this.anchoCostado.toString() || '',
+        material: this.selectedColorExterior?.toString() || 'N/A',
+        descripcion: 'Costado @B1',
         observacion: ''
       });
     }
 
-    // 4. Información del Maletero
-    if (this.mostrarMaletero) {
-      rows.push({
-        codigo: '005',
-        cantidad: '1',
-        largo: this.maleteroAlto?.toString() || '',
-        ancho: this.maleteroAncho?.toString() || '',
-        material: this.selectedColorInterior?.toString() || 'N/A', // Usar directamente el código del color interior
-        descripcion: 'Maletero',
-        observacion: ''
-      });
-    }
+    // 4. Información del Maletero // va a otro CSV
+    // if (this.mostrarMaletero) {
+    //   rows.push({
+    //     codigo: '',
+    //     cantidad: this.cantidadMaletero.toString() || '',
+    //     largo: this.maleteroAlto?.toString() || '',
+    //     ancho: this.maleteroAncho?.toString() || '',
+    //     material: this.selectedColorInterior?.toString() || 'N/A',
+    //     observacion: ''
+    //   });
+    // }
 
     // 5. Información de los Frentes de Cajón
     if (this.mostrarFrentesCajon) {
-      rows.push({
-        codigo: '006',
-        cantidad: '6',
-        largo: '595', // valor fijo
-        ancho: '200', // valor fijo
-        material: this.selectedColorExterior?.toString() || 'N/A', // Usar directamente el código del color exterior
-        descripcion: 'Frente de Cajón',
+      rows1.push({
+        codigo: '',
+        cantidad: this.cantidadFrentes.toString() || '',
+        largo: this.altoFrentes.toString() || '',
+        ancho: this.anchoFrentes.toString() || '',
+        material: this.selectedColorExterior?.toString() || 'N/A',
+        descripcion: 'Frente @L1 @B1 @T1 @R1',
         observacion: ''
       });
     }
 
     // 6. Información de las Entrepañerías internas
-    this.entrepanerias.forEach((entrepaneria, index) => {
-      rows.push({
-        codigo: `00${7 + index}`,
-        cantidad: entrepaneria.cantidad.toString(),
-        largo: entrepaneria.alto.toString(),
-        ancho: entrepaneria.ancho.toString(),
-        material: this.selectedColorInterior?.toString() || 'N/A', // Usar directamente el código del color interior
-        descripcion: `Entrepaño @B${index + 1}`,
-        observacion: ''
+    // va a otro CSV
+    // this.entrepanerias.forEach((entrepaneria, index) => {
+    //   rows.push({
+    //     codigo: `00${7 + index}`,
+    //     cantidad: entrepaneria.cantidad.toString(),
+    //     largo: entrepaneria.alto.toString(),
+    //     ancho: entrepaneria.ancho.toString(),
+    //     material: this.selectedColorInterior?.toString() || 'N/A',
+    //     descripcion: `Entrepaño @B${index + 1}`,
+    //     observacion: ''
+    //   });
+    // });
+
+    // Ordenar las filas por largo y luego por ancho de mayor a menor
+    rows1.sort((a, b) => {
+        if (parseFloat(b.largo) === parseFloat(a.largo)) {
+          return parseFloat(b.ancho) - parseFloat(a.ancho);
+        }
+        return parseFloat(b.largo) - parseFloat(a.largo);
       });
-    });
 
     // Convertir datos a formato CSV
-    const csvContent = [headers.join(','), ...rows.map(row => Object.values(row).join(','))].join('\n');
+    const csvContent = [headers.join(','), ...rows1.map(row => Object.values(row).join(','))].join('\n');
 
     // Crear y descargar el archivo CSV
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -255,6 +263,25 @@ export class ClosetsComponent {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+
+    const headers2 = ['Codigo', 'Cantidad', 'Largo', 'Ancho', 'Material', 'Descripcion', 'Observacion'];
+
+    const rows2 = [];
+
+     // 6. Información de las Entrepañerías internas
+    // va a otro CSV
+    // this.entrepanerias.forEach((entrepaneria, index) => {
+    //   rows.push({
+    //     codigo: `00${7 + index}`,
+    //     cantidad: entrepaneria.cantidad.toString(),
+    //     largo: entrepaneria.alto.toString(),
+    //     ancho: entrepaneria.ancho.toString(),
+    //     material: this.selectedColorInterior?.toString() || 'N/A',
+    //     descripcion: `Entrepaño @B${index + 1}`,
+    //     observacion: ''
+    //   });
+    // });
+
   }
 
   // Función genérica para ajustar el valor de un poste
