@@ -42,7 +42,6 @@ export class ClosetsComponent {
     { codigo: 104, nombre: 'Blanco AGL 16 mm' },
     { codigo: 105, nombre: 'Blanco MDF 12 mm' },
     { codigo: 106, nombre: 'Blanco MDF 15 mm' },
-    { codigo: 144, nombre: 'Blanco Melamina 16 mm' },
     { codigo: 107, nombre: 'Brandy Oak AGL 16 mm' },
     { codigo: 108, nombre: 'Caledonian Oak AGL 16 mm' },
     { codigo: 109, nombre: 'Cambridge Walnut AGL 16 mm' },
@@ -100,8 +99,8 @@ export class ClosetsComponent {
   secreter: number = 2;
   anchoSecreter: number = 295;
   altoSecreter: number = 740;
-  anchoFrentes: number = 200;
-  altoFrentes: number = 595;
+  anchoFrentes: number | null = 200;
+  altoFrentes: number | null = 595;
   altoCostado: number = 2400;
   anchoCostado: number = 620;
   mostrarCantidad: boolean = false;
@@ -221,8 +220,8 @@ export class ClosetsComponent {
       rows1.push({
         codigo: '',
         cantidad: this.cantidadFrentes.toString() || '',
-        largo: this.altoFrentes.toString() || '',
-        ancho: this.anchoFrentes.toString() || '',
+        largo: this.altoFrentes?.toString() || '',
+        ancho: this.anchoFrentes?.toString() || '',
         material: this.selectedColorExterior?.toString() || 'N/A',
         descripcion: 'Frente @L1 @B1 @T1 @R1',
         observacion: ''
@@ -316,7 +315,7 @@ export class ClosetsComponent {
 
   // Método para calcular el ancho de las puertas
   calcularAnchoPuerta() {
-    if (this.ancho !== null && this.ancho > 0 && this.posteIzq >= 0 && this.posteDerecho >= 0) {
+    if (this.ancho !== null && this.ancho > 0) {
       const resultadoAnchoPuerta = (this.ancho - 600 - this.posteIzq - 30 - this.posteDerecho) / 4 + 10;
 
       if (resultadoAnchoPuerta > 0) {
@@ -324,45 +323,75 @@ export class ClosetsComponent {
         this.mostrarCantidad = true;
         this.mostrarAlto = true;
         this.mostrarSecreter = true;
-        this.calcularMaletero();
-        this.calcularAnchoContraventanas(); // Llamada para calcular contraventanas
       } else {
-        this.resetVisibilidad();
+        this.anchoPuerta = null;
+        this.mostrarCantidad = false;
+        this.mostrarAlto = false;
+        this.mostrarSecreter = false;
       }
     } else {
-      this.resetVisibilidad();
+      this.anchoPuerta = null;
+      this.mostrarCantidad = false;
+      this.mostrarAlto = false;
+      this.mostrarSecreter = false;
     }
+
+    this.calcularAnchoContraventanas();
+    this.calcularMaletero();
+    this.cdr.detectChanges(); // Forzar la detección de cambios
   }
 
   calcularAnchoContraventanas() {
-    if (this.ancho !== null && this.ancho > 0 && this.posteIzq >= 0 && this.posteDerecho >= 0) {
+    if (this.ancho !== null && this.ancho > 0) {
       const resultadoAnchoContraventanas = (this.ancho - this.posteIzq - 32 - this.posteDerecho) / 4 + 10;
 
       if (resultadoAnchoContraventanas > 0) {
         this.anchoContraventanas = resultadoAnchoContraventanas;
         this.mostrarContraventanas = true;
       } else {
-        this.resetVisibilidad();
+        this.anchoContraventanas = null;
+        this.mostrarContraventanas = false;
       }
     } else {
-      this.resetVisibilidad();
+      this.anchoContraventanas = null;
+      this.mostrarContraventanas = false;
     }
+    this.cdr.detectChanges(); // Forzar la detección de cambios
   }
 
   calcularMaletero() {
-    if (this.ancho !== null && this.ancho > 0 && this.profundidad !== null && this.profundidad > 20) {
-      this.maleteroAncho = +this.ancho + 50;
-      this.maleteroAlto = +this.profundidad - 20;
-      this.mostrarMaletero = true;
-    } else {
-      this.mostrarMaletero = false;
-      this.maleteroAncho = null;
-      this.maleteroAlto = null;
-    }
+  if (this.ancho !== null && this.ancho > 0 && this.profundidad !== null && this.profundidad > 20) {
+    this.maleteroAncho = +this.ancho + 50;
+    this.maleteroAlto = +this.profundidad - 20;
+    this.mostrarMaletero = true;
+  } else {
+    this.maleteroAncho = null;
+    this.maleteroAlto = null;
+    this.mostrarMaletero = false;
+  }
+  this.cdr.detectChanges(); // Forzar la detección de cambios
+}
+
+onAltoChange() {
+  if (this.alto !== null && this.alto > 0) {
+    // Asignar los valores predeterminados cuando el input "Alto" tiene un valor válido
+    this.mostrarFrentesCajon = true;
+    this.altoFrentes = 595;
+    this.anchoFrentes = 200;
+  } else {
+    // Vaciar los valores si el input "Alto" es borrado o tiene un valor inválido
+    this.mostrarFrentesCajon = false;
+    this.altoFrentes = null;
+    this.anchoFrentes = null;
   }
 
-  onAltoChange() {
-    this.mostrarFrentesCajon = this.alto !== null && this.alto > 0;
+  this.calcularAnchoPuerta();
+  this.cdr.detectChanges(); // Forzar la detección de cambios
+}
+
+  onProfundidadChange() {
+    this.calcularMaletero();
+    this.cdr.detectChanges(); // Forzar la detección de cambios
   }
 
   onCostadoChange(event: Event) {
@@ -390,22 +419,30 @@ export class ClosetsComponent {
     this.maleteroAlto = null;
   }
 
-  // Función para agregar un entrepaño a la lista de seleccionados
   addEntrepeneria(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     const value = selectElement.value;
 
     if (!value) return;
+
     const [ancho, alto] = value.split(' ')[2].split('/').map(Number);
+
+    // Buscar si ya existe un entrepaño con las mismas dimensiones
     const existingEntrepano = this.entrepanerias.find(entrepano => entrepano.ancho === ancho && entrepano.alto === alto);
 
     if (existingEntrepano) {
       existingEntrepano.cantidad += 1;
     } else {
-      this.entrepanerias.push({ ancho, alto, color: 'C.I.', cantidad: 1 });
+      // Agregar el nuevo entrepaño con el color interior seleccionado
+      const colorNombre = this.colores.find(color => color.codigo === this.selectedColorInterior)?.nombre || 'N/A';
+      this.entrepanerias.push({
+        ancho,
+        alto,
+        color: colorNombre,
+        cantidad: 1
+      });
     }
+
     selectElement.value = '';
   }
-
-
 }

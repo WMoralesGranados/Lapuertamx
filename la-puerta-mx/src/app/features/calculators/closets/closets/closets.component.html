@@ -32,7 +32,7 @@
 
     <div class="flex justify-center items-center mb-6 relative">
       <div class="absolute top-0 right-[125px]">
-        <input type="text" placeholder="Profundidad" class="w-32 border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700" [(ngModel)]="profundidad" (input)="calcularAnchoPuerta()">
+        <input type="text" placeholder="Profundidad" class="w-32 border-b border-gray-400 bg-transparent focus:outline-none focus:ring-0 focus:border-gray-700" [(ngModel)]="profundidad" (input)="onProfundidadChange()">
       </div>
 
       <!-- Input para "Alto" -->
@@ -88,7 +88,7 @@
         <thead class="bg-gray-200">
           <tr>
             <th scope="col" class="px-32 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider"></th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider">CANTIDAD</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider" style="max-width: 100px;">CANTIDAD</th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider">ANCHO</th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider">ALTO</th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-900 uppercase tracking-wider">COLOR</th>
@@ -106,8 +106,10 @@
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
               <input *ngIf="mostrarAlto" type="text" [(ngModel)]="altoPuertas" class="border-none bg-transparent w-full">
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarCantidad" type="text" [(ngModel)]="selectedColorExterior" class="border-none bg-transparent w-full">
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900 color">
+              <select [(ngModel)]="selectedColorExterior" class="border-none bg-transparent w-full" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <option *ngFor="let color of colores" [value]="color.codigo">{{ color.nombre }}</option>
+              </select>
             </td>
           </tr>
           <tr>
@@ -121,8 +123,10 @@
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
               <input *ngIf="mostrarContraventanas" type="text" [(ngModel)]="altoContrav" class="border-none bg-transparent w-full">
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarContraventanas" type="text" [value]="'C.E.'" class="border-none bg-transparent w-full">
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900 color">
+              <select [(ngModel)]="selectedColorExterior" class="border-none bg-transparent w-full" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <option *ngFor="let color of colores" [value]="color.codigo">{{ color.nombre }}</option>
+              </select>
             </td>
           </tr>
           <tr>
@@ -136,8 +140,10 @@
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
               <input *ngIf="mostrarSecreter" type="text" [(ngModel)]="altoSecreter" class="border-none bg-transparent w-full">
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarSecreter" type="text" [value]="'C.E.'" class="border-none bg-transparent w-full">
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900 color">
+              <select [(ngModel)]="selectedColorExterior" class="border-none bg-transparent w-full" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <option *ngFor="let color of colores" [value]="color.codigo">{{ color.nombre }}</option>
+              </select>
             </td>
           </tr>
           <tr>
@@ -151,8 +157,10 @@
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
               <input *ngIf="mostrarFrentesCajon" type="text" [(ngModel)]="altoFrentes" class="border-none bg-transparent w-full">
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarFrentesCajon" type="text" [value]="'C.E.'" class="border-none bg-transparent w-full">
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900 color">
+              <select [(ngModel)]="selectedColorExterior" class="border-none bg-transparent w-full" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <option *ngFor="let color of colores" [value]="color.codigo">{{ color.nombre }}</option>
+              </select>
             </td>
           </tr>
           <tr>
@@ -166,8 +174,10 @@
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
               <input *ngIf="mostrarCostado" type="text" [(ngModel)]="altoCostado" class="border-none bg-transparent w-full">
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarCostado" type="text" [value]="'C.E.'" class="border-none bg-transparent w-full">
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900 color">
+              <select [(ngModel)]="selectedColorExterior" class="border-none bg-transparent w-full" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <option *ngFor="let color of colores" [value]="color.codigo">{{ color.nombre }}</option>
+              </select>
             </td>
           </tr>
           <tr>
@@ -181,8 +191,10 @@
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
               <input *ngIf="mostrarMaletero" type="text" [(ngModel)]="maleteroAlto" class="border-none bg-transparent w-full">
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input *ngIf="mostrarMaletero" type="text" [value]="'C.I.'" class="border-none bg-transparent w-full">
+            <td class="px-6 py-4 whitespace-nowrap text-gray-900 color">
+              <select [(ngModel)]="selectedColorInterior" class="border-none bg-transparent w-full" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <option *ngFor="let color of colores" [value]="color.codigo">{{ color.nombre }}</option>
+              </select>
             </td>
           </tr>
           <tr *ngFor="let entrepaneria of entrepanerias; let i = index">
@@ -197,7 +209,9 @@
               <input type="text" [(ngModel)]="entrepaneria.alto" class="border-none bg-transparent w-full">
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-gray-900">
-              <input type="text" [(ngModel)]="entrepaneria.color" class="border-none bg-transparent w-full">
+              <select [(ngModel)]="entrepaneria.color" class="border-none bg-transparent w-full">
+                <option *ngFor="let color of colores" [value]="color.nombre">{{ color.nombre }}</option>
+              </select>
             </td>
           </tr>
           <tr>
