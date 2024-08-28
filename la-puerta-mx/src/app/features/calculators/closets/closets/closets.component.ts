@@ -83,7 +83,7 @@ export class ClosetsComponent {
   ];
 
   ancho: number | null = null;
-  alto: number = 1835;
+  alto: number | null = null;
   profundidad: number | null = null;
   posteIzq: number = 50;
   posteDerecho: number = 50;
@@ -284,34 +284,39 @@ export class ClosetsComponent {
   }
 
   // Función genérica para ajustar el valor de un poste
-  ajustarPoste(tipo: 'izq' | 'der', valor: number) {
-    if (tipo === 'izq') {
-      const nuevoValorIzq = this.posteIzq - valor;
-      if (nuevoValorIzq >= 0) {
-        this.posteIzq = nuevoValorIzq;
-      }
-    } else if (tipo === 'der') {
-      const nuevoValorDer = this.posteDerecho + valor;
-      if (nuevoValorDer >= 0) {
-        this.posteDerecho = nuevoValorDer;
-      }
+ajustarPoste(tipo: 'izq' | 'der', cambio: number) {
+  if (tipo === 'izq') {
+    const nuevoValorIzq = this.posteIzq + cambio;
+    if (nuevoValorIzq >= 0) {
+      this.posteIzq = nuevoValorIzq;
     }
-    this.calcularAnchoPuertaSolo(); // Recalcula solo el ancho de las puertas
+  } else if (tipo === 'der') {
+    const nuevoValorDer = this.posteDerecho + cambio;
+    if (nuevoValorDer >= 0) {
+      this.posteDerecho = nuevoValorDer;
+    }
   }
+  this.calcularAnchoPuertaSolo(); // Recalcula solo el ancho de las puertas
+}
 
   calcularAnchoPuertaSolo() {
-    if (this.ancho !== null && this.ancho > 0 && this.posteIzq >= 0 && this.posteDerecho >= 0) {
-      const resultadoAnchoPuerta = (this.ancho - 600 - this.posteIzq - 30 - this.posteDerecho) / 4 + 10;
+  if (this.ancho !== null && this.ancho > 0 && this.posteIzq >= 0 && this.posteDerecho >= 0) {
+    const anchoBase = 285; // Suponiendo que este es el ancho base cuando los postes están en 50 mm cada uno
+    const ajusteIzq = (50 - this.posteIzq); // Ajuste del poste izquierdo
+    const ajusteDer = (50 - this.posteDerecho); // Ajuste del poste derecho
 
-      if (resultadoAnchoPuerta > 0) {
-        this.anchoPuerta = resultadoAnchoPuerta;
-      } else {
-        this.resetVisibilidad();
-      }
+    // Calculamos el nuevo ancho de la puerta sumando los ajustes de ambos postes
+    const nuevoAnchoPuerta = anchoBase + ajusteIzq + ajusteDer;
+
+    if (nuevoAnchoPuerta > 0) {
+      this.anchoPuerta = nuevoAnchoPuerta;
     } else {
       this.resetVisibilidad();
     }
+  } else {
+    this.resetVisibilidad();
   }
+}
 
   // Método para calcular el ancho de las puertas
   calcularAnchoPuerta() {
