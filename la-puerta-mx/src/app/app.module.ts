@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './features/home/home.component';
-import { ClosetsComponent } from './features/calculators/closets/closets/closets.component';
+import { ClosetsComponent } from './features/calculators/closets/Florencia-Classic/closets.component';
 import { ClosetModalComponent } from './features/home/closet-modal/closet-modal.component';
 
 @NgModule({
@@ -12,7 +12,7 @@ import { ClosetModalComponent } from './features/home/closet-modal/closet-modal.
     AppComponent,
     HomeComponent,
     ClosetsComponent,
-    ClosetModalComponent
+    ClosetModalComponent,
   ],
   imports: [
     BrowserModule,
