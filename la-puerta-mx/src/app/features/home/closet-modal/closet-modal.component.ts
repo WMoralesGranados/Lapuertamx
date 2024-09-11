@@ -11,6 +11,7 @@ export class ClosetModalComponent {
 
   constructor(private router: Router) {}
 
+  // Modificamos el método selectDesign para redirigir según el closet seleccionado
   selectDesign(design: string) {
     Swal.fire({
       title: `Has seleccionado el diseño: ${design}`,
@@ -30,7 +31,23 @@ export class ClosetModalComponent {
       `
     }).then((result) => {
       if (result.isConfirmed) {
-        this.router.navigate(['/closets']);
+        // Usamos un switch para redirigir a la ruta correcta según el diseño seleccionado
+        switch (design) {
+          case 'Florencia Classic':
+            this.router.navigate(['/calculators/closets/Florencia-Classic']);
+            break;
+          case 'Florencia Premium':
+            this.router.navigate(['/calculators/closets/florencia-premium']); // Nueva ruta añadida aquí
+            break;
+          case 'Milan':
+            this.router.navigate(['/calculators/closets/milan']);
+            break;
+          case 'Modena':
+            this.router.navigate(['/calculators/closets/modena']);
+            break;
+          default:
+            break;
+        }
         this.closeModal();
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         this.closeModal();
@@ -38,6 +55,7 @@ export class ClosetModalComponent {
     });
   }
 
+  // Cierra el modal al emitir el evento
   closeModal() {
     this.close.emit();
   }
