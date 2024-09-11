@@ -89,7 +89,7 @@ export class FlorenciaPremiumComponent {
   anchoPuerta: number | null = null;
   anchoContraventanas: number | null = null;
   altoContrav: number = 600;
-  altoPuertas: number = 1835;
+  altoPuertas: number = 192.5;
   cantidadPuertas: number = 4;
   cantidadContrav: number = 4;
   cantidadFrentes: number = 6;
@@ -97,7 +97,7 @@ export class FlorenciaPremiumComponent {
   cantidadMaletero: number = 1;
   secreter: number = 2;
   anchoSecreter: number = 295;
-  altoSecreter: number = 740;
+  altoSecreter: number = 830;
   anchoFrentes: number | null = 200;
   altoFrentes: number | null = 595;
   altoCostado: number = 2400;
