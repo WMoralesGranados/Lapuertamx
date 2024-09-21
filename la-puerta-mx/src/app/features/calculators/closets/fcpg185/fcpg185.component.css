@@ -1,0 +1,25 @@
+.hide-for-pdf {
+  display: none;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: white;
+  color: black;
+  text-align: center;
+  padding: 8px;
+  width: 300px;
+}
+
+select:focus {
+  outline: none;
+  border: 2px solid #4a4a4a; /* Cambia el color según tu diseño */
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
