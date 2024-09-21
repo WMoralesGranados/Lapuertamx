@@ -93,13 +93,13 @@ export class Fcpg185Component {
   altoPuertas: number = 1835;
   cantidadPuertas: number = 4;
   cantidadContrav: number = 4;
-  cantidadFrentes: number = 6;
+  cantidadFrentes: number = 4;
   cantidadCostado: number = 1;
   cantidadMaletero: number = 1;
   secreter: number = 2;
   anchoSecreter: number = 295;
-  altoSecreter: number = 740;
-  anchoFrentes: number | null = 200;
+  altoSecreter: number = 760;
+  anchoFrentes: number | null = 220;
   altoFrentes: number | null = 595;
   altoCostado: number = 2400;
   anchoCostado: number = 620;
