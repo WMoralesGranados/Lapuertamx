@@ -32,15 +32,17 @@ export class ClosetModalComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         // Usamos un switch para redirigir a la ruta correcta según el diseño seleccionado
+        this.closeModal();
+        console.log("Redirigiendo a: ", design);
         switch (design) {
           case 'Florencia Classic':
             this.router.navigate(['/calculators/closets/Florencia-Classic']);
             break;
           case 'Florencia Premium':
-            this.router.navigate(['/calculators/closets/florencia-premium']); // Nueva ruta añadida aquí
+            this.router.navigate(['/calculators/closets/florencia-premium']);
             break;
-          case 'Milan':
-            this.router.navigate(['/calculators/closets/milan']);
+          case 'FC 185 Perfil Gola':
+            this.router.navigate(['/calculators/closets/fcpg185']);
             break;
           case 'Modena':
             this.router.navigate(['/calculators/closets/modena']);
@@ -48,7 +50,6 @@ export class ClosetModalComponent {
           default:
             break;
         }
-        this.closeModal();
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         this.closeModal();
       }
