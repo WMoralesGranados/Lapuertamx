@@ -218,7 +218,7 @@ export class FlorenciaPremiumComponent {
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
-    link.setAttribute('download', 'closet-premium.csv'); // Cambiado el nombre del archivo CSV
+    link.setAttribute('download', 'closet-premium.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
