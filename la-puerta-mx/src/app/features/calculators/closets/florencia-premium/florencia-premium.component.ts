@@ -92,13 +92,13 @@ export class FlorenciaPremiumComponent {
   altoPuertas: number = 192.5;
   cantidadPuertas: number = 4;
   cantidadContrav: number = 4;
-  cantidadFrentes: number = 6;
+  cantidadFrentes: number = 5;
   cantidadCostado: number = 1;
   cantidadMaletero: number = 1;
   secreter: number = 2;
   anchoSecreter: number = 295;
   altoSecreter: number = 830;
-  anchoFrentes: number | null = 200;
+  anchoFrentes: number | null = 220;
   altoFrentes: number | null = 595;
   altoCostado: number = 2400;
   anchoCostado: number = 620;
@@ -319,7 +319,7 @@ export class FlorenciaPremiumComponent {
     if (this.alto !== null && this.alto > 0) {
       this.mostrarFrentesCajon = true;
       this.altoFrentes = 595;
-      this.anchoFrentes = 200;
+      this.anchoFrentes = 220;
     } else {
       this.mostrarFrentesCajon = false;
       this.altoFrentes = null;

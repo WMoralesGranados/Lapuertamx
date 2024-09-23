@@ -89,8 +89,8 @@ export class Fcpg185Component {
   posteDerecho: number = 50;
   anchoPuerta: number | null = null;
   anchoContraventanas: number | null = null;
-  altoContrav: number = 600;
-  altoPuertas: number = 1835;
+  altoContrav: number = 610;
+  altoPuertas: number = 1810;
   cantidadPuertas: number = 4;
   cantidadContrav: number = 4;
   cantidadFrentes: number = 4;
@@ -382,7 +382,7 @@ onAltoChange() {
     // Asignar los valores predeterminados cuando el input "Alto" tiene un valor válido
     this.mostrarFrentesCajon = true;
     this.altoFrentes = 595;
-    this.anchoFrentes = 200;
+    this.anchoFrentes = 220;
   } else {
     // Vaciar los valores si el input "Alto" es borrado o tiene un valor inválido
     this.mostrarFrentesCajon = false;
