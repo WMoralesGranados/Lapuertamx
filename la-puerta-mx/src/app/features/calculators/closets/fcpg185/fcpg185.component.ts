@@ -34,6 +34,9 @@ export class Fcpg185Component {
     'ENTREP. MELAMINA 60/240'
   ];
 
+
+  //pp
+
   // Lista de colores exteriores
   colores: { codigo: number, nombre: string }[] = [
     { codigo: 101, nombre: 'Aluminio AGL 16 mm' },
