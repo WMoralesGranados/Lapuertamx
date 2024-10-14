@@ -1,6 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-closets',
@@ -116,6 +117,7 @@ export class ClosetsComponent {
   selectedColorInterior: number | null = null;
   selectedExteriorName: string | null = null;
   selectedInteriorName: string | null = null;
+  mostrarContraventanasRojo: boolean = false;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -383,6 +385,19 @@ onAltoChange() {
     this.mostrarFrentesCajon = true;
     this.altoFrentes = 595;
     this.anchoFrentes = 200;
+
+    if (this.alto > 2900) {
+      Swal.fire({
+        title: 'Altura elevada',
+        text: 'La altura ingresada supera los 2900mm. Te sugerimos usar contraventanas de 800mm.',
+        icon: 'warning',
+        confirmButtonText: 'Aceptar',
+        footer: '<a href="#">¿Qué son contraventanas de 800mm?</a>' // Agrega un enlace opcional en el pie de la alerta
+      }).then((result) => {
+        this.mostrarContraventanasRojo = true;
+      });
+    }
+
   } else {
     // Vaciar los valores si el input "Alto" es borrado o tiene un valor inválido
     this.mostrarFrentesCajon = false;
@@ -392,6 +407,12 @@ onAltoChange() {
 
   this.calcularAnchoPuerta();
   this.cdr.detectChanges(); // Forzar la detección de cambios
+}
+
+onContraventanaAltoChange() {
+  if (this.altoContrav === 800) {
+    this.mostrarContraventanasRojo = false; // Quita el fondo rojo de la fila
+  }
 }
 
   onProfundidadChange() {
