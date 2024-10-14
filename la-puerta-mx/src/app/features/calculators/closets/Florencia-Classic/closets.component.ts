@@ -380,11 +380,28 @@ ajustarPoste(tipo: 'izq' | 'der', cambio: number) {
 }
 
 onAltoChange() {
-  if (this.alto !== null && this.alto > 0) {
+  if (this.alto !== null && this.alto.toString().length >= 4) {
     // Asignar los valores predeterminados cuando el input "Alto" tiene un valor válido
     this.mostrarFrentesCajon = true;
     this.altoFrentes = 595;
     this.anchoFrentes = 200;
+
+    if (this.alto < 2500) {
+      Swal.fire({
+        title: 'Revisión de contraventanas',
+        text: 'La altura ingresada es menor a 2500mm. Se sugiere revisar las contraventanas.',
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (this.alto !== null) {
+          const alturaContraventanas = this.alto - 1850 - 60;
+          this.altoContrav = alturaContraventanas; // Actualizar el valor de la columna "alto" en contraventanas
+          this.mostrarContraventanasRojo = true; // Marcar la fila de contraventanas en rojo
+        }
+      }
+      });
+    }
 
     if (this.alto > 2900) {
       Swal.fire({
