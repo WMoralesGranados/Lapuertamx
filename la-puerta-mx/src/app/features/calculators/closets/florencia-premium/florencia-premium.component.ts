@@ -1,6 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-florencia-premium',
@@ -115,6 +116,7 @@ export class FlorenciaPremiumComponent {
   selectedColorInterior: number | null = null;
   selectedExteriorName: string | null = null;
   selectedInteriorName: string | null = null;
+  mostrarContraventanasRojo: boolean = false; // Controla si la fila de contraventanas se resalta en rojo
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -316,18 +318,58 @@ export class FlorenciaPremiumComponent {
   }
 
   onAltoChange() {
-    if (this.alto !== null && this.alto > 0) {
+    if (this.alto !== null && this.alto.toString().length >= 4) {
+      // Muestra los frentes de cajón si el alto es válido
       this.mostrarFrentesCajon = true;
       this.altoFrentes = 595;
       this.anchoFrentes = 220;
+
+      // Validar si el alto es menor de 2500mm
+      if (this.alto < 2600) {
+        Swal.fire({
+          title: 'Revisión de contraventanas',
+          text: 'La altura ingresada es menor a 2500mm. Se sugiere revisar las contraventanas.',
+          icon: 'warning',
+          confirmButtonText: 'Aceptar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            if (this.alto !== null) {
+              const alturaContraventanas = this.alto - 1850 - 60;
+              this.altoContrav = alturaContraventanas;
+              this.mostrarContraventanas = true;
+            }
+          }
+        });
+      }
+
+      // Validar si el alto es mayor de 2900mm
+      if (this.alto > 3000) {
+        Swal.fire({
+          title: 'Altura elevada',
+          text: 'La altura ingresada supera los 2900mm. Te sugerimos usar contraventanas de 800mm.',
+          icon: 'warning',
+          confirmButtonText: 'Aceptar',
+          footer: '<a href="#">¿Qué son contraventanas de 800mm?</a>'
+        }).then(() => {
+          this.mostrarContraventanas = true;
+          this.altoContrav = 800; // Asigna un valor por defecto a las contraventanas
+        });
+      }
     } else {
+      // Si el alto no es válido o está vacío
       this.mostrarFrentesCajon = false;
       this.altoFrentes = null;
       this.anchoFrentes = null;
     }
 
     this.calcularAnchoPuerta();
-    this.cdr.detectChanges();
+    this.cdr.detectChanges(); // Forzar la detección de cambios
+  }
+
+  onContraventanaAltoChange() {
+    if (this.altoContrav === 800) {
+      this.mostrarContraventanasRojo = false; // Quita el resaltado rojo
+    }
   }
 
   onProfundidadChange() {

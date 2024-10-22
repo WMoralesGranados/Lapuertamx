@@ -381,10 +381,10 @@ ajustarPoste(tipo: 'izq' | 'der', cambio: number) {
 
 onAltoChange() {
   if (this.alto !== null && this.alto.toString().length >= 4) {
-    // Asignar los valores predeterminados cuando el input "Alto" tiene un valor válido
+    // Asignar valores predeterminados cuando el "Alto" es válido
     this.mostrarFrentesCajon = true;
     this.altoFrentes = 595;
-    this.anchoFrentes = 200;
+    this.anchoFrentes = 220;
 
     if (this.alto < 2500) {
       Swal.fire({
@@ -395,11 +395,11 @@ onAltoChange() {
       }).then((result) => {
         if (result.isConfirmed) {
           if (this.alto !== null) {
-          const alturaContraventanas = this.alto - 1850 - 60;
-          this.altoContrav = alturaContraventanas; // Actualizar el valor de la columna "alto" en contraventanas
-          this.mostrarContraventanasRojo = true; // Marcar la fila de contraventanas en rojo
+            const alturaContraventanas = this.alto - 1850 - 60;
+            this.altoContrav = alturaContraventanas; // Actualiza el alto de las contraventanas
+            this.mostrarContraventanasRojo = true; // Resalta la fila de contraventanas en rojo
+          }
         }
-      }
       });
     }
 
@@ -409,21 +409,22 @@ onAltoChange() {
         text: 'La altura ingresada supera los 2900mm. Te sugerimos usar contraventanas de 800mm.',
         icon: 'warning',
         confirmButtonText: 'Aceptar',
-        footer: '<a href="#">¿Qué son contraventanas de 800mm?</a>' // Agrega un enlace opcional en el pie de la alerta
-      }).then((result) => {
+        footer: '<a href="#">¿Qué son contraventanas de 800mm?</a>'
+      }).then(() => {
         this.mostrarContraventanasRojo = true;
+        this.altoContrav = 800; // Asigna un valor por defecto a las contraventanas
       });
     }
 
   } else {
-    // Vaciar los valores si el input "Alto" es borrado o tiene un valor inválido
+    // Limpia los valores si el "Alto" es inválido
     this.mostrarFrentesCajon = false;
     this.altoFrentes = null;
     this.anchoFrentes = null;
   }
 
   this.calcularAnchoPuerta();
-  this.cdr.detectChanges(); // Forzar la detección de cambios
+  this.cdr.detectChanges(); // Forzar la detección de cambios en la vista
 }
 
 onContraventanaAltoChange() {
