@@ -334,16 +334,16 @@ export class FlorenciaPremiumComponent {
         }).then((result) => {
           if (result.isConfirmed) {
             if (this.alto !== null) {
-              const alturaContraventanas = this.alto - 1850 - 60;
+              const alturaContraventanas = this.alto - 1940 - 60;
               this.altoContrav = alturaContraventanas;
-              this.mostrarContraventanas = true;
+              this.mostrarContraventanasRojo = true;
             }
           }
         });
       }
 
       // Validar si el alto es mayor de 2900mm
-      if (this.alto > 3000) {
+      if (this.alto > 2999) {
         Swal.fire({
           title: 'Altura elevada',
           text: 'La altura ingresada supera los 2900mm. Te sugerimos usar contraventanas de 800mm.',
@@ -351,7 +351,7 @@ export class FlorenciaPremiumComponent {
           confirmButtonText: 'Aceptar',
           footer: '<a href="#">¿Qué son contraventanas de 800mm?</a>'
         }).then(() => {
-          this.mostrarContraventanas = true;
+          this.mostrarContraventanasRojo = true;
           this.altoContrav = 800; // Asigna un valor por defecto a las contraventanas
         });
       }
