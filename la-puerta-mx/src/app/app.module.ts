@@ -11,7 +11,8 @@ import { Fcpg185Component } from './features/calculators/closets/fcpg185/fcpg185
 import { FlorenciaClassicSmallComponent } from './features/calculators/closets/Florencia-Classic/florencia-classic-small/florencia-classic-small.component';
 import { SidebarComponent } from './layouts/sidebar/sidebar.component';
 import { FCCajoneraCostadoComponent } from './features/calculators/closets/Florencia-Classic/fc-cajonera-costado/fc-cajonera-costado.component';
-import { FpSmallComponent } from './features/calculators/closets/florecia-premium/fp-small/fp-small.component';
+import { FpCcComponent } from './features/calculators/closets/florencia-premium/fp-cc/fp-cc.component';
+import { FpSmallComponent } from './features/calculators/closets/florencia-premium/fp-small/fp-small.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { FpSmallComponent } from './features/calculators/closets/florecia-premiu
     FlorenciaClassicSmallComponent,
     SidebarComponent,
     FCCajoneraCostadoComponent,
-    FpSmallComponent,
+    FpCcComponent,
+    FpSmallComponent
   ],
   imports: [
     BrowserModule,
