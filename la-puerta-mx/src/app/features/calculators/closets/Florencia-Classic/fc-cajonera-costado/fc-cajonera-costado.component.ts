@@ -90,6 +90,7 @@ export class FCCajoneraCostadoComponent {
   posteDerecho: number = 50;
   anchoPuerta: number | null = null;
   anchoContraventanas: number | null = null;
+  anchoContraventanas2: number = 29.5;
   altoContrav: number = 590;
   altoPuertas: number = 1835;
   cantidadPuertas: number = 2;
@@ -350,7 +351,7 @@ ajustarPoste(tipo: 'izq' | 'der', cambio: number) {
 
   calcularAnchoContraventanas() {
     if (this.ancho !== null && this.ancho > 0) {
-      const resultadoAnchoContraventanas = (this.ancho - this.posteIzq - 32 - this.posteDerecho) / 4 + 10;
+      const resultadoAnchoContraventanas = (this.ancho - 600 - 30 - this.posteDerecho) / 2 + 10;
 
       if (resultadoAnchoContraventanas > 0) {
         this.anchoContraventanas = resultadoAnchoContraventanas;
