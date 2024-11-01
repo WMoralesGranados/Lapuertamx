@@ -44,8 +44,11 @@ export class ClosetModalComponent {
           case 'FC 185 Perfil Gola':
             this.router.navigate(['/calculators/closets/fcpg185']);
             break;
-          case 'Modena':
-            this.router.navigate(['/calculators/closets/modena']);
+          case 'Florencia Small':
+            this.router.navigate(['/calculators/closets/florencia-classic-small']);
+            break;
+          case 'Florencia costado':
+            this.router.navigate(['/calculators/closets/fc-cajonera-costado']);
             break;
           default:
             break;

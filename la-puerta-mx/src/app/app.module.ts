@@ -8,7 +8,9 @@ import { ClosetsComponent } from './features/calculators/closets/Florencia-Class
 import { ClosetModalComponent } from './features/home/closet-modal/closet-modal.component';
 import { FlorenciaPremiumComponent } from './features/calculators/closets/florencia-premium/florencia-premium.component';
 import { Fcpg185Component } from './features/calculators/closets/fcpg185/fcpg185.component';
+import { FlorenciaClassicSmallComponent } from './features/calculators/closets/florencia-classic-small/florencia-classic-small.component';
 import { SidebarComponent } from './layouts/sidebar/sidebar.component';
+import { FCCajoneraCostadoComponent } from './features/calculators/closets/fc-cajonera-costado/fc-cajonera-costado.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { SidebarComponent } from './layouts/sidebar/sidebar.component';
     ClosetModalComponent,
     FlorenciaPremiumComponent,
     Fcpg185Component,
+    FlorenciaClassicSmallComponent,
     SidebarComponent,
+    FCCajoneraCostadoComponent,
   ],
   imports: [
     BrowserModule,
