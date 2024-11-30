@@ -13,6 +13,7 @@ export class SidebarComponent {
   isClosetsOpen: boolean = false;
   currentRoute: string = '';
   isFlorenciaClassicOpen: boolean = false;
+  isFlorenciaPremiumOpen: boolean = false;
 
   constructor(private router: Router) {
     // Escuchar los cambios de ruta y actualizar la ruta actual
@@ -35,6 +36,10 @@ export class SidebarComponent {
 
   toggleFlorenciaClassic() {
     this.isFlorenciaClassicOpen = !this.isFlorenciaClassicOpen;
+  }
+
+  toggleFlorenciaPremium() {
+    this.isFlorenciaPremiumOpen = !this.isFlorenciaPremiumOpen;
   }
 
   // Confirmar navegación antes de cambiar de componente
