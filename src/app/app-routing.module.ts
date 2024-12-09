@@ -8,6 +8,7 @@ import { FlorenciaPremiumComponent } from './features/calculators/closets/floren
 import { FpSmallComponent } from './features/calculators/closets/florencia-premium/fp-small/fp-small.component';
 import { FpCcComponent } from './features/calculators/closets/florencia-premium/fp-cc/fp-cc.component';
 import { Fcpg185Component } from './features/calculators/closets/fcpg185/fcpg185.component';
+import { MilanComponent } from './features/calculators/closets/milan/milan.component';
 
 
 const routes: Routes = [
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'calculators/closets/Florencia-Classic/fc-cajonera-costado', component: FCCajoneraCostadoComponent },
   { path: 'calculators/closets/florencia-premium', component: FlorenciaPremiumComponent },
   { path: 'calculators/closets/florencia-premium/fp-small', component: FpSmallComponent },
-  { path: 'calculators/closets/florencia-premium/fp-cc', component: FpCcComponent }
+  { path: 'calculators/closets/florencia-premium/fp-cc', component: FpCcComponent },
+  { path: 'calculators/closets/milan', component: MilanComponent }
 ];
 
 @NgModule({
