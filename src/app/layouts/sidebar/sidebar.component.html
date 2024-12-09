@@ -34,6 +34,15 @@
           </ul>
 
           <li class="font-light text-lg text-gray-500 hover:text-gray-700 cursor-pointer" (click)="navigateWithConfirmation('/calculators/closets/fcpg185')">Florencia Perfil Gola</li>
+
+          <!-- Milan -->
+          <li class="font-light text-lg text-gray-500 hover:text-gray-700 cursor-pointer" (click)="toggleMilan()">Milan</li>
+          <!-- Submenu de Florencia Classic -->
+          <ul *ngIf="isMilanOpen" class="pl-4 space-y-1">
+            <li class="font-light text-lg text-gray-500 hover:text-gray-700 cursor-pointer" (click)="navigateWithConfirmation('/calculators/closets/milan')">Milan 2 Modulos</li>
+            <li class="font-light text-lg text-gray-500 hover:text-gray-700 cursor-pointer" (click)="navigateWithConfirmation('/calculators/closets/Florencia-Classic/florencia-classic-small')">Milan 3 modulos</li>
+            <li class="font-light text-lg text-gray-500 hover:text-gray-700 cursor-pointer" (click)="navigateWithConfirmation('/calculators/closets/Florencia-Classic/fc-cajonera-costado')">Milan 4 Modulos</li>
+          </ul>
         </ul>
 
         <!-- Otras opciones de Calculadoras -->
