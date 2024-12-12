@@ -14,6 +14,8 @@ import { FCCajoneraCostadoComponent } from './features/calculators/closets/Flore
 import { FpCcComponent } from './features/calculators/closets/florencia-premium/fp-cc/fp-cc.component';
 import { FpSmallComponent } from './features/calculators/closets/florencia-premium/fp-small/fp-small.component';
 import { MilanComponent } from './features/calculators/closets/milan/milan.component';
+import { MilanTresModulosComponent } from './features/calculators/closets/milan/milan-tres-modulos/milan-tres-modulos.component';
+import { MilanCuatroModulosComponent } from './features/calculators/closets/milan/milan-cuatro-modulos/milan-cuatro-modulos.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { MilanComponent } from './features/calculators/closets/milan/milan.compo
     FCCajoneraCostadoComponent,
     FpCcComponent,
     FpSmallComponent,
-    MilanComponent
+    MilanComponent,
+    MilanTresModulosComponent,
+    MilanCuatroModulosComponent
   ],
   imports: [
     BrowserModule,
