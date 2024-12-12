@@ -88,38 +88,40 @@ export class MilanComponent {
   ancho: number | null = null;
   alto: number | null = null;
   profundidad: number | null = null;
-  posteIzq: number = 50;
-  posteDerecho: number = 50;
+  posteIzq: number = 25;
+  posteDerecho: number = 25;
   anchoPuerta: number | null = null;
   anchoContraventanas: number | null = null;
   altoContrav: number = 600;
-  altoPuertas: number = 1835;
+  altoPuertas: number = 0;
   cantidadPuertas: number = 4;
   cantidadContrav: number = 4;
   cantidadFrentes: number = 6;
   cantidadCostado: number = 1;
-  cantidadMaletero: number = 1;
+  cantidadAntepecho: number = 1;
   secreter: number = 2;
   anchoSecreter: number = 295;
   altoSecreter: number = 740;
-  anchoFrentes: number | null = 200;
-  altoFrentes: number | null = 595;
+  anchoFrentes: number | null = null;
+  altoFrentes: number | null = 220;
   altoCostado: number = 2400;
   anchoCostado: number = 620;
   mostrarCantidad: boolean = false;
   mostrarAlto: boolean = false;
   mostrarContraventanas: boolean = false;
-  mostrarSecreter: boolean = false;
+  // mostrarSecreter: boolean = false;
   mostrarFrentesCajon: boolean = false;
   mostrarCostado: boolean = false;
-  mostrarMaletero: boolean = false;
-  maleteroAncho: number | null = null;
-  maleteroAlto: number | null = null;
+  mostrarAntepecho: boolean = false;
+  anchoAntepecho: number | null = null;
+  altoAntepecho: number | null = 80;
   selectedColorExterior: number | null = null;
   selectedColorInterior: number | null = null;
   selectedExteriorName: string | null = null;
   selectedInteriorName: string | null = null;
   mostrarContraventanasRojo: boolean = false;
+  mostrarAltoFrentes: boolean = false;
+  mostrarAltoPuertas: boolean = false;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -182,17 +184,17 @@ export class MilanComponent {
     }
 
     // 2. Información del Secreter
-    if (this.mostrarSecreter) {
-      rows1.push({
-        codigo: '',
-        cantidad: this.secreter.toString() || '',
-        largo: this.altoSecreter.toString() || '',
-        ancho: this.anchoSecreter.toString() || '',
-        material: this.selectedColorExterior?.toString() || 'N/A',
-        descripcion: 'Secreter @L1 @B1 @T1 @R1',
-        observacion: ''
-      });
-    }
+    // if (this.mostrarSecreter) {
+    //   rows1.push({
+    //     codigo: '',
+    //     cantidad: this.secreter.toString() || '',
+    //     largo: this.altoSecreter.toString() || '',
+    //     ancho: this.anchoSecreter.toString() || '',
+    //     material: this.selectedColorExterior?.toString() || 'N/A',
+    //     descripcion: 'Secreter @L1 @B1 @T1 @R1',
+    //     observacion: ''
+    //   });
+    // }
 
     // 3. Información del Costado
     if (this.mostrarCostado) {
@@ -288,20 +290,20 @@ export class MilanComponent {
   }
 
   // Función genérica para ajustar el valor de un poste
-ajustarPoste(tipo: 'izq' | 'der', cambio: number) {
-  if (tipo === 'izq') {
-    const nuevoValorIzq = this.posteIzq + cambio;
-    if (nuevoValorIzq >= 0) {
-      this.posteIzq = nuevoValorIzq;
-    }
-  } else if (tipo === 'der') {
-    const nuevoValorDer = this.posteDerecho + cambio;
-    if (nuevoValorDer >= 0) {
-      this.posteDerecho = nuevoValorDer;
-    }
+  ajustarPoste(tipo: 'izq' | 'der', cambio: number) {
+      if (tipo === 'izq') {
+        const nuevoValorIzq = this.posteIzq + cambio;
+        if (nuevoValorIzq >= 0) {
+          this.posteIzq = nuevoValorIzq;
+        }
+      } else if (tipo === 'der') {
+        const nuevoValorDer = this.posteDerecho + cambio;
+        if (nuevoValorDer >= 0) {
+          this.posteDerecho = nuevoValorDer;
+        }
+      }
+      this.calcularAnchoPuertaSolo(); // Recalcula solo el ancho de las puertas
   }
-  this.calcularAnchoPuertaSolo(); // Recalcula solo el ancho de las puertas
-}
 
   calcularAnchoPuertaSolo() {
   if (this.ancho !== null && this.ancho > 0 && this.posteIzq >= 0 && this.posteDerecho >= 0) {
@@ -325,118 +327,179 @@ ajustarPoste(tipo: 'izq' | 'der', cambio: number) {
   // Método para calcular el ancho de las puertas
   calcularAnchoPuerta() {
     if (this.ancho !== null && this.ancho > 0) {
-      const resultadoAnchoPuerta = (this.ancho - 600 - this.posteIzq - 30 - this.posteDerecho) / 4 + 10;
+      const anchoCajonera = (this.ancho - 50) / 2
+      const resultadoAnchoPuerta = (anchoCajonera - 8) / 2;
 
       if (resultadoAnchoPuerta > 0) {
         this.anchoPuerta = resultadoAnchoPuerta;
         this.mostrarCantidad = true;
         this.mostrarAlto = true;
-        this.mostrarSecreter = true;
+        // this.mostrarSecreter = true;
       } else {
         this.anchoPuerta = null;
         this.mostrarCantidad = false;
         this.mostrarAlto = false;
-        this.mostrarSecreter = false;
+        // this.mostrarSecreter = false;
       }
     } else {
       this.anchoPuerta = null;
       this.mostrarCantidad = false;
       this.mostrarAlto = false;
-      this.mostrarSecreter = false;
+      // this.mostrarSecreter = false;
     }
 
-    this.calcularAnchoContraventanas();
-    this.calcularMaletero();
+    // this.calcularAnchoContraventanas();
+    // this.calcularMaletero();
     this.cdr.detectChanges(); // Forzar la detección de cambios
   }
 
-  calcularAnchoContraventanas() {
-    if (this.ancho !== null && this.ancho > 0) {
-      const resultadoAnchoContraventanas = (this.ancho - this.posteIzq - 32 - this.posteDerecho) / 4 + 10;
-
-      if (resultadoAnchoContraventanas > 0) {
-        this.anchoContraventanas = resultadoAnchoContraventanas;
-        this.mostrarContraventanas = true;
+    calcularAltoPuertas() {
+      if (this.alto !== null && this.alto > 0) {
+        const resultado = (this.alto - 80 - 810) + 20;
+        if (resultado > 0) {
+          this.altoPuertas = resultado;
+          this.mostrarAltoPuertas = true;
+          this.mostrarAlto = true;
+        } else {
+          this.altoPuertas = 0;
+          this.mostrarAltoPuertas = false;
+          this.mostrarAlto = false;
+        }
       } else {
-        this.anchoContraventanas = null;
-        this.mostrarContraventanas = false;
+        this.altoPuertas = 0;
+        this.mostrarAltoPuertas = false;
+        this.mostrarAlto = false;
+      }
+      this.cdr.detectChanges(); // Forzar la detección de cambios
+    }
+    anchoFrentesCajon(){
+      if (this.ancho !== null && this.ancho > 0) {
+        const resultado = (this.ancho - this.posteIzq - this.posteDerecho) / 2 - 5;
+
+        if (resultado > 0) {
+          this.anchoFrentes = resultado;
+          this.mostrarFrentesCajon = true;
+          this.mostrarAltoFrentes = true;
+          this.altoFrentes = 220;
+        } else {
+          this.anchoFrentes = null;
+          this.mostrarFrentesCajon = false;
+          this.mostrarAltoFrentes = false;
+          this.altoFrentes = null;
+        }
+    } else {
+      this.anchoFrentes = null;
+      this.mostrarFrentesCajon = false;
+      this.mostrarAltoFrentes = false;
+      this.altoFrentes = null;
+    }
+    this.cdr.detectChanges(); // Forzar la detección de cambios
+  }
+
+  calcularAntepecho() {
+    if(this.ancho !== null && this.ancho > 0) {
+      const resultado = this.ancho + 50;
+      if (resultado > 0) {
+        this.anchoAntepecho = resultado;
+        this.mostrarAntepecho = true;
+      } else {
+        this.anchoAntepecho = 0;
+        this.mostrarAntepecho = false;
       }
     } else {
-      this.anchoContraventanas = null;
-      this.mostrarContraventanas = false;
+      this.anchoAntepecho = 0;
+      this.mostrarAntepecho = false;
     }
     this.cdr.detectChanges(); // Forzar la detección de cambios
   }
 
-  calcularMaletero() {
-  if (this.ancho !== null && this.ancho > 0 && this.profundidad !== null && this.profundidad > 20) {
-    this.maleteroAncho = +this.ancho + 50;
-    this.maleteroAlto = +this.profundidad - 20;
-    this.mostrarMaletero = true;
-  } else {
-    this.maleteroAncho = null;
-    this.maleteroAlto = null;
-    this.mostrarMaletero = false;
-  }
-  this.cdr.detectChanges(); // Forzar la detección de cambios
-}
+  // calcularAnchoContraventanas() {
+  //   if (this.ancho !== null && this.ancho > 0) {
+  //     const resultadoAnchoContraventanas = (this.ancho - this.posteIzq - 32 - this.posteDerecho) / 4 + 10;
+
+  //     if (resultadoAnchoContraventanas > 0) {
+  //       this.anchoContraventanas = resultadoAnchoContraventanas;
+  //       this.mostrarContraventanas = true;
+  //     } else {
+  //       this.anchoContraventanas = null;
+  //       this.mostrarContraventanas = false;
+  //     }
+  //   } else {
+  //     this.anchoContraventanas = null;
+  //     this.mostrarContraventanas = false;
+  //   }
+  //   this.cdr.detectChanges(); // Forzar la detección de cambios
+  // }
+
+//   calcularMaletero() {
+//   if (this.ancho !== null && this.ancho > 0 && this.profundidad !== null && this.profundidad > 20) {
+//     this.maleteroAncho = +this.ancho + 50;
+//     this.maleteroAlto = +this.profundidad - 20;
+//     this.mostrarMaletero = true;
+//   } else {
+//     this.maleteroAncho = null;
+//     this.maleteroAlto = null;
+//     this.mostrarMaletero = false;
+//   }
+//   this.cdr.detectChanges(); // Forzar la detección de cambios
+// }
 
 onAltoChange() {
   if (this.alto !== null && this.alto.toString().length >= 4) {
     // Asignar valores predeterminados cuando el "Alto" es válido
-    this.mostrarFrentesCajon = true;
-    this.altoFrentes = 595;
-    this.anchoFrentes = 220;
+    this.anchoFrentesCajon();
+    this.calcularAltoPuertas();
+    this.calcularAntepecho();
 
-    if (this.alto < 2500) {
-      Swal.fire({
-        title: 'Revisión de contraventanas',
-        text: 'La altura ingresada es menor a 2500mm. Se sugiere revisar las contraventanas.',
-        icon: 'warning',
-        confirmButtonText: 'Aceptar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          if (this.alto !== null) {
-            const alturaContraventanas = this.alto - 1850 - 60;
-            this.altoContrav = alturaContraventanas; // Actualiza el alto de las contraventanas
-            this.mostrarContraventanasRojo = true; // Resalta la fila de contraventanas en rojo
-          }
-        }
-      });
-    }
+  //   if (this.alto < 2500) {
+  //     Swal.fire({
+  //       title: 'Revisión de contraventanas',
+  //       text: 'La altura ingresada es menor a 2500mm. Se sugiere revisar las contraventanas.',
+  //       icon: 'warning',
+  //       confirmButtonText: 'Aceptar'
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         if (this.alto !== null) {
+  //           const alturaContraventanas = this.alto - 1850 - 60;
+  //           this.altoContrav = alturaContraventanas; // Actualiza el alto de las contraventanas
+  //           this.mostrarContraventanasRojo = true; // Resalta la fila de contraventanas en rojo
+  //         }
+  //       }
+  //     });
+  //   }
 
-    if (this.alto > 2900) {
-      Swal.fire({
-        title: 'Altura elevada',
-        text: 'La altura ingresada supera los 2900mm. Te sugerimos usar contraventanas de 800mm.',
-        icon: 'warning',
-        confirmButtonText: 'Aceptar',
-        footer: '<a href="#">¿Qué son contraventanas de 800mm?</a>'
-      }).then(() => {
-        this.mostrarContraventanasRojo = true;
-        this.altoContrav = 800; // Asigna un valor por defecto a las contraventanas
-      });
-    }
+  //   if (this.alto > 2900) {
+  //     Swal.fire({
+  //       title: 'Altura elevada',
+  //       text: 'La altura ingresada supera los 2900mm. Te sugerimos usar contraventanas de 800mm.',
+  //       icon: 'warning',
+  //       confirmButtonText: 'Aceptar',
+  //       footer: '<a href="#">¿Qué son contraventanas de 800mm?</a>'
+  //     }).then(() => {
+  //       this.mostrarContraventanasRojo = true;
+  //       this.altoContrav = 800; // Asigna un valor por defecto a las contraventanas
+  //     });
+  //   }
 
-  } else {
-    // Limpia los valores si el "Alto" es inválido
-    this.mostrarFrentesCajon = false;
-    this.altoFrentes = null;
-    this.anchoFrentes = null;
-  }
+  // } else {
+  //   // Limpia los valores si el "Alto" es inválido
+  //   this.mostrarFrentesCajon = false;
+  //   this.altoFrentes = null;
+  //   this.anchoFrentes = null;
+   }
 
   this.calcularAnchoPuerta();
   this.cdr.detectChanges(); // Forzar la detección de cambios en la vista
 }
 
-onContraventanaAltoChange() {
-  if (this.altoContrav === 800) {
-    this.mostrarContraventanasRojo = false; // Quita el fondo rojo de la fila
-  }
-}
+// onContraventanaAltoChange() {
+//   if (this.altoContrav === 800) {
+//     this.mostrarContraventanasRojo = false; // Quita el fondo rojo de la fila
+//   }
+// }
 
   onProfundidadChange() {
-    this.calcularMaletero();
+    // this.calcularMaletero();
     this.cdr.detectChanges(); // Forzar la detección de cambios
   }
 
@@ -456,13 +519,13 @@ onContraventanaAltoChange() {
     this.mostrarCantidad = false;
     this.mostrarAlto = false;
     this.mostrarContraventanas = false;
-    this.mostrarSecreter = false;
+    // this.mostrarSecreter = false;
     this.anchoContraventanas = null;
     this.mostrarFrentesCajon = false;
     this.mostrarCostado = false;
-    this.mostrarMaletero = false;
-    this.maleteroAncho = null;
-    this.maleteroAlto = null;
+    // this.mostrarMaletero = false;
+    // this.maleteroAncho = null;
+    // this.maleteroAlto = null;
   }
 
   addEntrepeneria(event: Event) {
