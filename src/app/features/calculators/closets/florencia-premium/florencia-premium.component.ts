@@ -97,7 +97,7 @@ export class FlorenciaPremiumComponent {
   cantidadCostado: number = 1;
   cantidadMaletero: number = 1;
   secreter: number = 2;
-  anchoSecreter: number = 295;
+  anchoSecreter: number = 296;
   altoSecreter: number = 830;
   anchoFrentes: number | null = 220;
   altoFrentes: number | null = 595;
