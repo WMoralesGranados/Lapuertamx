@@ -84,6 +84,7 @@ export class MilanTresModulosComponent {
     { codigo: 144, nombre: 'Cairo MDF 15 mm' },
   ];
 
+  zoclo: number | null = null;
   ancho: number | null = null;
   alto: number | null = null;
   profundidad: number | null = null;
@@ -121,6 +122,7 @@ export class MilanTresModulosComponent {
   mostrarContraventanasRojo: boolean = false;
   mostrarAltoFrentes: boolean = false;
   mostrarAltoPuertas: boolean = false;
+  cajoneras: number | null = null;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -326,57 +328,68 @@ export class MilanTresModulosComponent {
   // Método para calcular el ancho de las puertas
   calcularAnchoPuerta() {
     if (this.ancho !== null && this.ancho > 0) {
-      const anchoCajonera = (this.ancho - 50) / 2
-      const resultadoAnchoPuerta = (anchoCajonera - 8) / 2;
+      const anchoCajonera = (this.ancho - 50 ) / 3;
+      const resultadoFrente = (anchoCajonera - 5);
+      const resultadoAnchoPuerta = ((resultadoFrente - 2) / 2);
 
       if (resultadoAnchoPuerta > 0) {
         this.anchoPuerta = resultadoAnchoPuerta;
         this.mostrarCantidad = true;
         this.mostrarAlto = true;
-        // this.mostrarSecreter = true;
       } else {
         this.anchoPuerta = null;
         this.mostrarCantidad = false;
         this.mostrarAlto = false;
-        // this.mostrarSecreter = false;
       }
     } else {
       this.anchoPuerta = null;
       this.mostrarCantidad = false;
       this.mostrarAlto = false;
-      // this.mostrarSecreter = false;
     }
-
-    // this.calcularAnchoContraventanas();
-    // this.calcularMaletero();
     this.cdr.detectChanges(); // Forzar la detección de cambios
   }
 
-    calcularAltoPuertas() {
-      if (this.alto !== null && this.alto > 0) {
-        const resultado = (this.alto - 80 - 810) + 20;
-        if (resultado > 0) {
-          this.altoPuertas = resultado;
-          this.mostrarAltoPuertas = true;
-          this.mostrarAlto = true;
-        } else {
-          this.altoPuertas = 0;
-          this.mostrarAltoPuertas = false;
-          this.mostrarAlto = false;
-        }
+  onZocloChange() {
+    this.calcularAltoPuertas();
+    this.cdr.detectChanges(); // Forzar la detección de cambios
+  }
+
+  calcularAltoPuertas() {
+    if (this.alto !== null && this.alto > 0) {
+      const resultado = this.alto - 60 - 740;
+
+      // Normalizar el valor de zoclo
+      const zocloValue = this.zoclo !== null && !isNaN(Number(this.zoclo)) ? Number(this.zoclo) : null;
+
+      if (resultado > 0 && (zocloValue === null || zocloValue === 0)) {
+        this.altoPuertas = resultado - 60;
+        this.mostrarAltoPuertas = true;
+        this.mostrarAlto = true;
+      }
+      // Verificar explícitamente si zocloValue no es null
+      else if (resultado > 0 && zocloValue !== null && zocloValue > 0) {
+        this.altoPuertas = resultado - zocloValue;
+        this.mostrarAltoPuertas = true;
+        this.mostrarAlto = true;
       } else {
         this.altoPuertas = 0;
         this.mostrarAltoPuertas = false;
         this.mostrarAlto = false;
       }
-      this.cdr.detectChanges(); // Forzar la detección de cambios
+    } else {
+      this.altoPuertas = 0;
+      this.mostrarAltoPuertas = false;
+      this.mostrarAlto = false;
     }
+    this.cdr.detectChanges(); // Forzar la detección de cambios
+  }
+
     anchoFrentesCajon(){
       if (this.ancho !== null && this.ancho > 0) {
-        const resultado = (this.ancho - this.posteIzq - this.posteDerecho) / 2 - 5;
+        const resultado = (this.ancho - 50) / 3;
 
         if (resultado > 0) {
-          this.anchoFrentes = resultado;
+          this.anchoFrentes = resultado - 5;
           this.mostrarFrentesCajon = true;
           this.mostrarAltoFrentes = true;
           this.altoFrentes = 220;

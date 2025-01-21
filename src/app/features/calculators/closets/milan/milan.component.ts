@@ -374,7 +374,7 @@ export class MilanComponent {
     }
     anchoFrentesCajon(){
       if (this.ancho !== null && this.ancho > 0) {
-        const resultado = (this.ancho - this.posteIzq - this.posteDerecho) / 2 - 5;
+        const resultado = (this.ancho - 50) / 2;
 
         if (resultado > 0) {
           this.anchoFrentes = resultado;
